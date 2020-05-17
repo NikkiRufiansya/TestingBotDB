@@ -1,5 +1,7 @@
 // See https://github.com/dialogflow/dialogflow-fulfillment-nodejs
 // for Dialogflow fulfillment library docs, samples, and to report issues
+//file ini yg bener
+
 'use strict';
  
 const functions = require('firebase-functions');
@@ -36,18 +38,20 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     let QueryTextFromUser = agent.query;
     return admin.database().ref('/query_user').push({query: QueryTextFromUser}).then((snapshot) => {
       console.log('database write sucessful: ' + snapshot.ref.toString());
-      agent.add("Okeyyy gann");
+      agent.add("okelah klw begitu");
 
     });
   }
 
-  
-
+  function insert(agent) {
+    let kata = agent.query;
+    agent.add("function jalan : " + kata)
+  }
   
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('insertDB', insertToRealtimeFirebase);
-  
+  intentMap.set('insert', insert);
   agent.handleRequest(intentMap);
 });
